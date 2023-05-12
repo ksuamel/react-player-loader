@@ -65,7 +65,7 @@ class ReactPlayerLoader extends React.Component {
     // If there is any player currently loaded, dispose it before fetching a
     // new one.
     this.disposePlayer();
-    console.log("test 1");
+    console.log("RPL: loading player");
 
     // We need to provide our own callbacks below, so we cache these
     // user-provided callbacks for use later.
@@ -136,7 +136,7 @@ class ReactPlayerLoader extends React.Component {
       playerLoader.setBaseUrl(this.props.baseUrl);
     }
 
-    console.log("test 2");
+    console.log("RPL: playerLoader");
     playerLoader(options);
     playerLoader.setBaseUrl(originalBaseUrl);
   }
@@ -145,20 +145,25 @@ class ReactPlayerLoader extends React.Component {
    * Disposes the current player, if there is one.
    */
   disposePlayer() {
+    console.log("RPL: trying to dispose.");
     // Nothing to dispose.
     if (!this.player) {
+      console.log("RPL: nothing to dispose.");
       return;
     }
 
     // Dispose an in-page player.
     if (this.player.dispose) {
+      console.log("RPL: disposing in-page player");
       this.player.dispose();
 
       // Dispose an iframe player.
     } else if (this.player.parentNode) {
       this.player.parentNode.removeChild(this.player);
+      console.log("RPL: disposing iframe player");
     }
 
+    console.log("RPL: setting player to null");
     // Null out the player reference.
     this.player = null;
   }
@@ -315,6 +320,7 @@ class ReactPlayerLoader extends React.Component {
    * Called just after the component has mounted.
    */
   componentDidMount() {
+    console.log("RPL: did mount");
     this.isMounted_ = true;
     this.loadPlayer();
   }
@@ -330,6 +336,7 @@ class ReactPlayerLoader extends React.Component {
    *         The previous props state before change.
    */
   componentDidUpdate(prevProps) {
+    console.log("RPL: did update");
     // Calculate the prop changes.
     const changes = Object.keys(prevProps).reduce((acc, key) => {
       const previous = prevProps[key];
@@ -372,6 +379,7 @@ class ReactPlayerLoader extends React.Component {
    * Called just before a component unmounts. Disposes the player.
    */
   componentWillUnmount() {
+    console.log("RPL: will unmount");
     this.isMounted_ = false;
     this.disposePlayer();
   }
@@ -383,6 +391,7 @@ class ReactPlayerLoader extends React.Component {
    *          The react element to render.
    */
   render() {
+    console.log("RPL: render");
     const props = Object.assign(
       { className: "brightcove-react-player-loader" },
       this.props.attrs,

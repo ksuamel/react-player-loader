@@ -1291,9 +1291,9 @@
         onSuccess: function onSuccess(_ref) {
           var ref = _ref.ref,
               type = _ref.type;
-
-          // If the component is not mounted when the callback fires, dispose
+          console.log("RPL: onSuccess"); // If the component is not mounted when the callback fires, dispose
           // the player and bail out.
+
           if (!_this2.isMounted_) {
             _this2.disposePlayer(ref);
 
@@ -1301,7 +1301,8 @@
           } // Store a player reference on the component.
 
 
-          _this2.player = ref; // Null out the player reference when the player is disposed from
+          _this2.player = ref;
+          console.log("RPL: player value", _this2.player); // Null out the player reference when the player is disposed from
           // outside the component.
 
           if (type === "in-page") {
@@ -1325,7 +1326,8 @@
           }
         },
         onFailure: function onFailure(error) {
-          // Ignore errors when not mounted.
+          console.log("RPL: onFailure"); // Ignore errors when not mounted.
+
           if (!_this2.isMounted_) {
             return;
           } // Call a user-provided onFailure callback.

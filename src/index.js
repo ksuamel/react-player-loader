@@ -76,6 +76,7 @@ class ReactPlayerLoader extends React.Component {
       refNode: this.refNode,
       refNodeInsert: "append",
       onSuccess: ({ ref, type }) => {
+        console.log("RPL: onSuccess");
         // If the component is not mounted when the callback fires, dispose
         // the player and bail out.
         if (!this.isMounted_) {
@@ -86,6 +87,7 @@ class ReactPlayerLoader extends React.Component {
         // Store a player reference on the component.
         this.player = ref;
 
+        console.log("RPL: player value", this.player);
         // Null out the player reference when the player is disposed from
         // outside the component.
         if (type === "in-page") {
@@ -106,6 +108,7 @@ class ReactPlayerLoader extends React.Component {
         }
       },
       onFailure: (error) => {
+        console.log("RPL: onFailure");
         // Ignore errors when not mounted.
         if (!this.isMounted_) {
           return;

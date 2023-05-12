@@ -1273,8 +1273,7 @@ function (_React$Component) {
 
     // If there is any player currently loaded, dispose it before fetching a
     // new one.
-    this.disposePlayer();
-    console.log("RPL: loading player"); // We need to provide our own callbacks below, so we cache these
+    this.disposePlayer(); // We need to provide our own callbacks below, so we cache these
     // user-provided callbacks for use later.
 
     var userSuccess = this.props.onSuccess;
@@ -1286,9 +1285,9 @@ function (_React$Component) {
       onSuccess: function onSuccess(_ref) {
         var ref = _ref.ref,
             type = _ref.type;
-        console.log("RPL: onSuccess"); // If the component is not mounted when the callback fires, dispose
-        // the player and bail out.
 
+        // If the component is not mounted when the callback fires, dispose
+        // the player and bail out.
         if (!_this2.isMounted_) {
           _this2.disposePlayer(ref);
 
@@ -1296,8 +1295,7 @@ function (_React$Component) {
         } // Store a player reference on the component.
 
 
-        _this2.player = ref;
-        console.log("RPL: player value", _this2.player); // Null out the player reference when the player is disposed from
+        _this2.player = ref; // Null out the player reference when the player is disposed from
         // outside the component.
 
         if (type === "in-page") {
@@ -1321,8 +1319,7 @@ function (_React$Component) {
         }
       },
       onFailure: function onFailure(error) {
-        console.log("RPL: onFailure"); // Ignore errors when not mounted.
-
+        // Ignore errors when not mounted.
         if (!_this2.isMounted_) {
           return;
         } // Call a user-provided onFailure callback.
@@ -1351,12 +1348,13 @@ function (_React$Component) {
       brightcovePlayerLoader.setBaseUrl(this.props.baseUrl);
     }
 
-    if (!this.loaded) {
-      console.log("RPL: playerLoader");
-      this.loaded = true;
-      brightcovePlayerLoader(options);
-      brightcovePlayerLoader.setBaseUrl(originalBaseUrl);
+    if (this.loaded) {
+      return;
     }
+
+    this.loaded = true;
+    brightcovePlayerLoader(options);
+    brightcovePlayerLoader.setBaseUrl(originalBaseUrl);
   }
   /**
    * Disposes the current player, if there is one.
@@ -1364,23 +1362,18 @@ function (_React$Component) {
   ;
 
   _proto.disposePlayer = function disposePlayer() {
-    console.log("RPL: trying to dispose."); // Nothing to dispose.
-
+    // Nothing to dispose.
     if (!this.player) {
-      console.log("RPL: nothing to dispose.");
       return;
     } // Dispose an in-page player.
 
 
     if (this.player.dispose) {
-      console.log("RPL: disposing in-page player");
       this.player.dispose(); // Dispose an iframe player.
     } else if (this.player.parentNode) {
       this.player.parentNode.removeChild(this.player);
-      console.log("RPL: disposing iframe player");
-    }
+    } // Null out the player reference.
 
-    console.log("RPL: setting player to null"); // Null out the player reference.
 
     this.player = null;
     this.loaded = false;
@@ -1529,7 +1522,6 @@ function (_React$Component) {
   ;
 
   _proto.componentDidMount = function componentDidMount() {
-    console.log("RPL: did mount");
     this.isMounted_ = true;
     this.loadPlayer();
   }
@@ -1548,8 +1540,7 @@ function (_React$Component) {
   _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
     var _this4 = this;
 
-    console.log("RPL: did update"); // Calculate the prop changes.
-
+    // Calculate the prop changes.
     var changes = Object.keys(prevProps).reduce(function (acc, key) {
       var previous = prevProps[key];
       var current = _this4.props[key]; // Do not compare functions
@@ -1591,7 +1582,6 @@ function (_React$Component) {
   ;
 
   _proto.componentWillUnmount = function componentWillUnmount() {
-    console.log("RPL: will unmount");
     this.isMounted_ = false;
     this.disposePlayer();
   }
@@ -1604,8 +1594,6 @@ function (_React$Component) {
   ;
 
   _proto.render = function render() {
-    console.log("RPL: render");
-
     var props = _extends({
       className: "brightcove-react-player-loader"
     }, this.props.attrs, {

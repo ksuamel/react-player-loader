@@ -1264,6 +1264,7 @@
       };
 
       _this.loadPlayer = _this.loadPlayer.bind(_assertThisInitialized(_this));
+      _this.loaded = false;
       return _this;
     }
     /**
@@ -1356,9 +1357,12 @@
         brightcovePlayerLoader.setBaseUrl(this.props.baseUrl);
       }
 
-      console.log("RPL: playerLoader");
-      brightcovePlayerLoader(options);
-      brightcovePlayerLoader.setBaseUrl(originalBaseUrl);
+      if (!this.loaded) {
+        console.log("RPL: playerLoader");
+        this.loaded = true;
+        brightcovePlayerLoader(options);
+        brightcovePlayerLoader.setBaseUrl(originalBaseUrl);
+      }
     }
     /**
      * Disposes the current player, if there is one.
@@ -1385,6 +1389,7 @@
       console.log("RPL: setting player to null"); // Null out the player reference.
 
       this.player = null;
+      this.loaded = false;
     }
     /**
      * Find the index of the `playlistVideoId` prop within the player's playlist.

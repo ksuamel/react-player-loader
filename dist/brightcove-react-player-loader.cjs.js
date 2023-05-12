@@ -1262,6 +1262,7 @@ function (_React$Component) {
     };
 
     _this.loadPlayer = _this.loadPlayer.bind(_assertThisInitialized(_this));
+    _this.loaded = false;
     return _this;
   }
   /**
@@ -1354,9 +1355,12 @@ function (_React$Component) {
       brightcovePlayerLoader.setBaseUrl(this.props.baseUrl);
     }
 
-    console.log("RPL: playerLoader");
-    brightcovePlayerLoader(options);
-    brightcovePlayerLoader.setBaseUrl(originalBaseUrl);
+    if (!this.loaded) {
+      console.log("RPL: playerLoader");
+      this.loaded = true;
+      brightcovePlayerLoader(options);
+      brightcovePlayerLoader.setBaseUrl(originalBaseUrl);
+    }
   }
   /**
    * Disposes the current player, if there is one.
@@ -1383,6 +1387,7 @@ function (_React$Component) {
     console.log("RPL: setting player to null"); // Null out the player reference.
 
     this.player = null;
+    this.loaded = false;
   }
   /**
    * Find the index of the `playlistVideoId` prop within the player's playlist.

@@ -56,6 +56,7 @@ class ReactPlayerLoader extends React.Component {
       this.refNode = ref;
     };
     this.loadPlayer = this.loadPlayer.bind(this);
+    this.loaded = false;
   }
 
   /**
@@ -139,9 +140,12 @@ class ReactPlayerLoader extends React.Component {
       playerLoader.setBaseUrl(this.props.baseUrl);
     }
 
-    console.log("RPL: playerLoader");
-    playerLoader(options);
-    playerLoader.setBaseUrl(originalBaseUrl);
+    if (!this.loaded) {
+      console.log("RPL: playerLoader");
+      this.loaded = true;
+      playerLoader(options);
+      playerLoader.setBaseUrl(originalBaseUrl);
+    }
   }
 
   /**
@@ -169,6 +173,7 @@ class ReactPlayerLoader extends React.Component {
     console.log("RPL: setting player to null");
     // Null out the player reference.
     this.player = null;
+    this.loaded = false;
   }
 
   /**
